@@ -1,9 +1,9 @@
-import TriangleNet from './components/TriangleNet';
+import BackgroundTriangles from './components/BackgroundTriangles';
 
 function App() {
   return (
     <div>
-      <TriangleNet />
+      <BackgroundTriangles />
     </div>
   );
 }
