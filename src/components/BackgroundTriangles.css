@@ -1,0 +1,28 @@
+/* src/components/TriangleNet.css */
+
+:root {
+    /* adjust these two to change your net’s look: */
+    --triangle-line-color: #0c1c2b;
+    --triangle-background-color: #000000;
+  }
+  
+  /* The container wrapping the Three.js canvas */
+  #background-triangles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+  
+    /* background behind the transparent canvas */
+    background-color: var(--triangle-background-color);
+  }
+  
+  /* If you ever need to style the canvas itself: */
+  #background-triangles canvas {
+    display: block;    /* remove inline whitespace */
+    width: 100%;
+    height: 100%;
+  }
+  
