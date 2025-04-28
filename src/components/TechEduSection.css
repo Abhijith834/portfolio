@@ -105,7 +105,7 @@
 .tab {
   flex: 1;
   padding: 12px 0;
-  font: 600 13px/1 "Inter", sans-serif;
+  font: 600 13px/1 "Inter",sans-serif;
   letter-spacing: 0.05em;
   background: none;
   border: none;
@@ -147,8 +147,8 @@
 .timeline-item.fade-out {
   animation: fade-out var(--fade-dur) ease-in-out forwards;
 }
-@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
-@keyframes fade-out { from { opacity: 1 } to { opacity: 0 } }
+@keyframes fade-in   { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fade-out  { from { opacity: 1 } to { opacity: 0 } }
 
 /* Remove any horizontal slide: just fade */
 .timeline-content {
@@ -194,13 +194,14 @@
   margin-bottom: 4px;
 }
 
-/* responsive glow adjustments */
+/* ── responsive glow radii ───────────────────────── */
 @media (max-width: 1199px) {
   :root {
     --glow-mid: 10px;
     --glow-outer: 20px;
   }
 }
+/* ── compact glow for tiny screens ──────────────── */
 @media (max-width: 599px) {
   :root {
     --glow-mid: 6px;
@@ -208,10 +209,54 @@
   }
 }
 
-/* responsive layout */
+/* ── proper responsive layout ───────────────────────── */
+@media (max-width: 900px) {
+  .tech-edu-wrapper {
+    gap: 40px;
+    padding: 0 16px;
+  }
+  .tab {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+}
 @media (max-width: 600px) {
-  .tech-card,
-  .edu-card {
+  .tech-edu-wrapper {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+  }
+  .tech-list {
+    grid-template-columns: 1fr;
+    gap: 8px 0;
+  }
+  .tech-card, .edu-card {
     width: 100%;
+    padding: 16px;
+    box-shadow:
+      inset 0 0 var(--glow-inner) rgb(var(--neon-rgb)/0.5),
+      0 0 var(--glow-mid)          rgb(var(--neon-rgb)/0.6),
+      0 0 var(--glow-outer)        rgb(var(--neon-rgb)/0.5);
+  }
+  .card-title {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .timeline-content h4 {
+    font-size: 14px;
+  }
+  .timeline-content ul {
+    font-size: 12px;
+  }
+}
+@media (max-width: 400px) {
+  .tab {
+    font-size: 11px;
+  }
+  .timeline-content h4 {
+    font-size: 13px;
+  }
+  .timeline-content ul {
+    font-size: 11px;
   }
 }
