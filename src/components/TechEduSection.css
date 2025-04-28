@@ -1,0 +1,185 @@
+:root {
+  --neon: #00c0ff;
+  --dot-size: 14px;
+  --gap: 2px;                 /* gap between dot ring & line */
+  --fade-dur: 100ms;          /* fade‐out & fade‐in duration */
+  --slide-dur: 35ms;          /* retained but not used for horizontal */
+  --content-delay: var(--fade-dur);
+}
+
+/* ── wrapper & cards ─────────────────────────────────────── */
+.tech-edu-wrapper {
+  margin: 120px auto 0;
+  display: flex;
+  gap: 90px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  font-family: "Inter", sans-serif;
+  color: #fff;
+  width: 100vw;
+}
+.tech-card,
+.edu-card {
+  background: #040b14;
+  border: 2px solid var(--neon);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 0 8px #00c0ff80, 0 0 16px #00c0ff40;
+}
+
+/* ── tech list ─────────────────────────────────────────── */
+.tech-card { width: 300px; }
+.card-title {
+  margin: 0 0 16px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #e0e0e0;
+}
+.tech-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+}
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tech-icon {
+  width: 20px;
+  height: 20px;
+  background: #555;
+  border-radius: 4px;
+}
+.tech-bar {
+  flex: 1;
+  height: 20px;
+  background: #aaa;
+  border-radius: 4px;
+}
+
+/* ── tab selector ──────────────────────────────────────── */
+.edu-card { width: min(560px, 90vw); }
+.tab-bar {
+  position: relative;
+  display: flex;
+  width: 100%;
+  border: 2px solid var(--neon);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  background: #040b14;
+}
+.tab-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: #00c0ff20;
+  transition: left 0.3s ease;
+  border-radius: 4px;
+  z-index: 1;
+}
+.tab {
+  flex: 1;
+  padding: 12px 0;
+  font: 600 13px/1 "Inter", sans-serif;
+  letter-spacing: 0.05em;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+.tab:hover { color: var(--neon); }
+
+/* ── timeline (line & dots) ────────────────────────────── */
+.timeline {
+  position: relative;
+  --axis-x: 16px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: var(--axis-x);
+  width: 2px;
+  background: var(--neon);
+  transition: left 0.2s ease-in-out;
+  will-change: left;
+  z-index: 0;
+}
+
+/* timeline rows */
+.timeline-item {
+  will-change: opacity;
+  margin-bottom: 28px;
+}
+
+/* Fade utility classes with ease-in-out */
+.timeline-item.fade-in {
+  animation: fade-in var(--fade-dur) ease-in-out forwards;
+}
+.timeline-item.fade-out {
+  animation: fade-out var(--fade-dur) ease-in-out forwards;
+}
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fade-out { from { opacity: 1 } to { opacity: 0 } }
+
+/* Remove any horizontal slide: just fade */
+.timeline-content {
+  opacity: 0;
+  will-change: opacity;
+}
+.timeline-content.slide-in-left,
+.timeline-content.slide-in-right {
+  animation:
+    fade-in var(--fade-dur) ease-in-out var(--content-delay) forwards;
+}
+
+/* moving dots */
+.timeline-dot {
+  position: absolute;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  margin-left: calc(-1 * var(--dot-size) / 2);
+  border: 2px solid var(--neon);
+  border-radius: 50%;
+  background: #040b14;
+  box-shadow: 0 0 0 var(--gap) #040b14;
+  transition:
+    left 0.2s ease-in-out,
+    top  0.2s ease-in-out;
+  will-change: left, top;
+  z-index: 1;
+}
+
+/* content text */
+.timeline-content h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.timeline-content ul {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.8;
+}
+.timeline-content li {
+  margin-bottom: 4px;
+}
+
+/* responsive */
+@media (max-width: 600px) {
+  .tech-card,
+  .edu-card {
+    width: 100%;
+  }
+}
