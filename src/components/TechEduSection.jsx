@@ -4,25 +4,45 @@ import "./TechEduSection.css";
 const techStack = Array.from({ length: 10 }, (_, i) => `Tech ${i + 1}`);
 
 const education = [
-  { title: "Lorem ipsum.", details: ["A-1","A-2","A-3","A-4","A-5","A-6"] },
-  { title: "Dolor sit.",   details: ["B-1","B-2","B-3","B-4","B-5","B-6"] },
+  {
+    title: "Lorem ipsum.",
+    details: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6"],
+  },
+  { title: "Dolor sit.", details: ["B-1", "B-2", "B-3", "B-4", "B-5", "B-6"] },
 ];
 const certificates = [
-  { title: "Lorem – 2024", details: ["Issued by Lorem Ipsum Academy","sfgswgrwesgrswegrweg"] },
-  { title: "Dolor – 2023", details: ["Issued by Dolor Institute","Issued by Lorem Ipsum Academy","sfgswgrwesgrswegrweg"] },
+  {
+    title: "Lorem – 2024",
+    details: ["Issued by Lorem Ipsum Academy", "sfgswgrwesgrswegrweg"],
+  },
+  {
+    title: "Dolor – 2023",
+    details: [
+      "Issued by Dolor Institute",
+      "Issued by Lorem Ipsum Academy",
+      "sfgswgrwesgrswegrweg",
+    ],
+  },
 ];
 
 export default function TechEduSection() {
-  const FADE_OUT = 100;            // ms to fade out completely
-  const CONTENT_DELAY = FADE_OUT;  // we’ll use same value to delay fade-in
-  const SLIDE_DUR = 350;           // unchanged
+  const FADE_OUT = 100; // ms to fade out completely
+  const CONTENT_DELAY = FADE_OUT; // we’ll use same value to delay fade-in
+  const SLIDE_DUR = 350; // unchanged
 
-  const [tab, setTab]               = useState("education");
+  const [tab, setTab] = useState("education");
   const [displayTab, setDisplayTab] = useState("education");
-  const [fading, setFading]         = useState(false);
+  const [fading, setFading] = useState(false);
 
   const measureRef = useRef(null);
   const [dotTops, setDotTops] = useState([]);
+  useEffect(() => {
+    if (!measureRef.current) return;
+    const items = Array.from(
+      measureRef.current.querySelectorAll(".timeline-item")
+    );
+    setDotTops(items.map((el) => el.offsetTop + 2));
+  }, [displayTab]);
 
   const onClickTab = (newTab) => {
     if (newTab === tab) return;
@@ -44,14 +64,14 @@ export default function TechEduSection() {
     }, FADE_OUT);
   };
 
-  const listForMeasure   = tab === "education"    ? education   : certificates;
-  const listForDisplay   = displayTab === "education" ? education : certificates;
+  const listForMeasure = tab === "education" ? education : certificates;
+  const listForDisplay = displayTab === "education" ? education : certificates;
 
   // axis + padding logic unchanged
-  const axisX    = tab === "education" ? "16px" : "calc(100% - 16px)";
-  const txtAlign = tab === "education" ? "left"  : "right";
-  const padLeft  = tab === "education" ? "32px"  : "0";
-  const padRight = tab === "education" ? "0"     : "32px";
+  const axisX = tab === "education" ? "16px" : "calc(100% - 16px)";
+  const txtAlign = tab === "education" ? "left" : "right";
+  const padLeft = tab === "education" ? "32px" : "0";
+  const padRight = tab === "education" ? "0" : "32px";
 
   return (
     <section className="tech-edu-wrapper">
@@ -147,7 +167,11 @@ export default function TechEduSection() {
                   }}
                 >
                   <h4>{title}</h4>
-                  <ul>{details.map((d, di) => <li key={di}>{d}</li>)}</ul>
+                  <ul>
+                    {details.map((d, di) => (
+                      <li key={di}>{d}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}

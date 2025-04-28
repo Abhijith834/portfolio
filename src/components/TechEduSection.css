@@ -1,13 +1,22 @@
 :root {
   --neon: #00c0ff;
+  /* expose the RGB triplet for use in rgb() */
+  --neon-rgb: 0 192 255;
+
   --dot-size: 14px;
   --gap: 2px;                 /* gap between dot ring & line */
+
   --fade-dur: 100ms;          /* fade‐out & fade‐in duration */
   --slide-dur: 35ms;          /* retained but not used for horizontal */
   --content-delay: var(--fade-dur);
+
+  /* glow radii */
+  --glow-inner: 6px;
+  --glow-mid: 12px;
+  --glow-outer: 24px;
 }
 
-/* ── wrapper & cards ─────────────────────────────────────── */
+/* ── wrapper ─────────────────────────────────────── */
 .tech-edu-wrapper {
   margin: 120px auto 0;
   display: flex;
@@ -19,13 +28,20 @@
   color: #fff;
   width: 100vw;
 }
+
+/* ── cards with neon glow ───────────────────────── */
 .tech-card,
 .edu-card {
-  background: #040b14;
-  border: 2px solid var(--neon);
+  /* sharp neon border */
+  border: 2px solid rgb(var(--neon-rgb));
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 0 8px #00c0ff80, 0 0 16px #00c0ff40;
+
+  /* inset + two outer glows */
+  box-shadow:
+    inset 0 0 var(--glow-inner) rgb(var(--neon-rgb)/0.6),
+    0 0 var(--glow-mid)          rgb(var(--neon-rgb)/0.8),
+    0 0 var(--glow-outer)        rgb(var(--neon-rgb)/0.6);
 }
 
 /* ── tech list ─────────────────────────────────────────── */
@@ -69,7 +85,7 @@
   position: relative;
   display: flex;
   width: 100%;
-  border: 2px solid var(--neon);
+  border: 2px solid rgb(var(--neon-rgb));
   border-radius: 6px;
   overflow: hidden;
   margin-bottom: 24px;
@@ -81,7 +97,7 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background: #00c0ff20;
+  background: rgba(0,192,255,0.125);
   transition: left 0.3s ease;
   border-radius: 4px;
   z-index: 1;
@@ -98,7 +114,7 @@
   z-index: 2;
   transition: color 0.2s;
 }
-.tab:hover { color: var(--neon); }
+.tab:hover { color: rgb(var(--neon-rgb)); }
 
 /* ── timeline (line & dots) ────────────────────────────── */
 .timeline {
@@ -111,7 +127,8 @@
   top: 0; bottom: 0;
   left: var(--axis-x);
   width: 2px;
-  background: var(--neon);
+  background: rgb(var(--neon-rgb));
+  transform: translateZ(0);
   transition: left 0.2s ease-in-out;
   will-change: left;
   z-index: 0;
@@ -150,10 +167,11 @@
   width: var(--dot-size);
   height: var(--dot-size);
   margin-left: calc(-1 * var(--dot-size) / 2);
-  border: 2px solid var(--neon);
+  border: 2px solid rgb(var(--neon-rgb));
   border-radius: 50%;
   background: #040b14;
   box-shadow: 0 0 0 var(--gap) #040b14;
+  transform: translateZ(0);
   transition:
     left 0.2s ease-in-out,
     top  0.2s ease-in-out;
@@ -176,7 +194,21 @@
   margin-bottom: 4px;
 }
 
-/* responsive */
+/* responsive glow adjustments */
+@media (max-width: 1199px) {
+  :root {
+    --glow-mid: 10px;
+    --glow-outer: 20px;
+  }
+}
+@media (max-width: 599px) {
+  :root {
+    --glow-mid: 6px;
+    --glow-outer: 12px;
+  }
+}
+
+/* responsive layout */
 @media (max-width: 600px) {
   .tech-card,
   .edu-card {
