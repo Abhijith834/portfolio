@@ -1,7 +1,7 @@
 import React from 'react';
 import './Intro.css';
 import locationIcon from '../assets/location.png';
-import profilePic from '../assets/Frame 3.png';
+import profilePic from '../assets/Frame 3.webp';
 
 const Intro = () => {
   return (

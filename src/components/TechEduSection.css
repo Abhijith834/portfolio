@@ -1,10 +1,6 @@
 :root {
-  --neon: #00c0ff;
-  /* expose the RGB triplet for use in rgb() */
-
   --dot-size: 14px;
   --gap: 2px;                 /* gap between dot ring & line */
-
   --fade-dur: 100ms;          /* fade‐out & fade‐in duration */
   --slide-dur: 35ms;          /* retained but not used for horizontal */
   --content-delay: var(--fade-dur);
@@ -35,10 +31,8 @@
 }
 
 
-/* ── cards with neon glow ───────────────────────── */
 .tech-card,
 .edu-card {
-  /* sharp neon border */
   border: 2px solid rgb(var(--glow));
   border-radius: 12px;
   padding: 24px;
@@ -79,7 +73,6 @@
   border: 2px solid rgb(var(--glow));
   border-radius: 8px;
   background: #040b14;
-  /* neon glow */
   box-shadow:
     inset 0 0 calc(var(--glow-inner)) rgb(var(--glow)/0.4),
     0 0 calc(var(--glow-mid))          rgb(var(--glow)/0.4),

@@ -4,20 +4,20 @@ import "./TechEduSection.css";
 
 // Import each asset so the bundler emits the correct URL at build time
 import pythonIcon     from "../assets/technologies/python.png";
-import figmaIcon      from "../assets/technologies/figma.png";
-import pytorchIcon    from "../assets/technologies/pytorch.png";
-import reactIcon      from "../assets/technologies/react.png";
-import numpyIcon      from "../assets/technologies/numpy.jpg";
-import jsIcon         from "../assets/technologies/js.png";
-import huggingfaceIcon from "../assets/technologies/huggingface.png";
-import threejsIcon    from "../assets/technologies/threejs.png";
+import figmaIcon      from "../assets/technologies/figma.webp";
+import pytorchIcon    from "../assets/technologies/pytorch.webp";
+import reactIcon      from "../assets/technologies/react.webp";
+import numpyIcon      from "../assets/technologies/numpy.webp";
+import jsIcon         from "../assets/technologies/js.webp";
+import huggingfaceIcon from "../assets/technologies/huggingface.webp";
+import threejsIcon    from "../assets/technologies/threejs.webp";
 import dockerIcon     from "../assets/technologies/docker.webp";
-import sqlIcon        from "../assets/technologies/sql-server.png";
+import sqlIcon        from "../assets/technologies/sql-server.webp";
 import ollamaIcon     from "../assets/technologies/ollama.webp";
-import gitIcon        from "../assets/technologies/git.png";
+import gitIcon        from "../assets/technologies/git.webp";
 import opencvIcon     from "../assets/technologies/opencv.jpg";
-import javaIcon       from "../assets/technologies/java.png";
-import tensorflowIcon from "../assets/technologies/tensorflow.png";
+import javaIcon       from "../assets/technologies/java.webp";
+import tensorflowIcon from "../assets/technologies/tensorflow.webp";
 import kerasIcon      from "../assets/technologies/keras_black.png";
 
 const techStack = [
