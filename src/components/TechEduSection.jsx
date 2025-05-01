@@ -128,7 +128,7 @@ export default function TechEduSection() {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el || !isMarquee) return;
-    const SPEED = 0.5;
+    const SPEED = 0.1;
     let pos = 0, frame;
     function step() {
       if (!(window.innerWidth >= 601 && window.innerWidth <= 890)) {
