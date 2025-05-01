@@ -1,7 +1,6 @@
 :root {
   --avatar-size: clamp(120px, 30vw, 270px);
   --h-gap: clamp(24px, 4vw, 48px);
-  --glow: 56 189 248;
   --glow-inner: 6px;
   --glow-mid: 12px;
   --glow-outer: 24px;
