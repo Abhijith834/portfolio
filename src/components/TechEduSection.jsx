@@ -1,23 +1,42 @@
+// src/components/TechEduSection.jsx
 import React, { useState, useRef, useEffect } from "react";
 import "./TechEduSection.css";
 
+// Import each asset so the bundler emits the correct URL at build time
+import pythonIcon     from "../assets/technologies/python.png";
+import figmaIcon      from "../assets/technologies/figma.png";
+import pytorchIcon    from "../assets/technologies/pytorch.png";
+import reactIcon      from "../assets/technologies/react.png";
+import numpyIcon      from "../assets/technologies/numpy.jpg";
+import jsIcon         from "../assets/technologies/js.png";
+import huggingfaceIcon from "../assets/technologies/huggingface.png";
+import threejsIcon    from "../assets/technologies/threejs.png";
+import dockerIcon     from "../assets/technologies/docker.webp";
+import sqlIcon        from "../assets/technologies/sql-server.png";
+import ollamaIcon     from "../assets/technologies/ollama.webp";
+import gitIcon        from "../assets/technologies/git.png";
+import opencvIcon     from "../assets/technologies/opencv.jpg";
+import javaIcon       from "../assets/technologies/java.png";
+import tensorflowIcon from "../assets/technologies/tensorflow.png";
+import kerasIcon      from "../assets/technologies/keras_black.png";
+
 const techStack = [
-  { name: "Python", iconSrc: "src/assets/technologies/python.png" },
-  { name: "Figma", iconSrc: "src/assets/technologies/figma.png" },
-  { name: "Pytorch", iconSrc: "src/assets/technologies/pytorch.png" },
-  { name: "React", iconSrc: "src/assets/technologies/react.png" },
-  { name: "Numpy", iconSrc: "src/assets/technologies/numpy.jpg" },
-  { name: "JavaScript", iconSrc: "src/assets/technologies/js.png" },
-  { name: "Huggingface", iconSrc: "src/assets/technologies/huggingface.png" },
-  { name: "ThreeJs", iconSrc: "src/assets/technologies/threejs.png" },
-  { name: "Docker", iconSrc: "src/assets/technologies/docker.webp" },
-  { name: "SQL", iconSrc: "src/assets/technologies/sql-server.png" },
-  { name: "Ollama", iconSrc: "src/assets/technologies/ollama.webp" },
-  { name: "Git", iconSrc: "src/assets/technologies/git.png" },
-  { name: "OpenCv", iconSrc: "src/assets/technologies/opencv.jpg" },
-  { name: "Java", iconSrc: "src/assets/technologies/java.png" },
-  { name: "Tensorflow", iconSrc: "src/assets/technologies/tensorflow.png" },
-  { name: "Keras", iconSrc: "src/assets/technologies/keras_black.png" },
+  { name: "Python",     iconSrc: pythonIcon     },
+  { name: "Figma",      iconSrc: figmaIcon      },
+  { name: "Pytorch",    iconSrc: pytorchIcon    },
+  { name: "React",      iconSrc: reactIcon      },
+  { name: "Numpy",      iconSrc: numpyIcon      },
+  { name: "JavaScript", iconSrc: jsIcon         },
+  { name: "Huggingface",iconSrc: huggingfaceIcon},
+  { name: "ThreeJs",    iconSrc: threejsIcon    },
+  { name: "Docker",     iconSrc: dockerIcon     },
+  { name: "SQL",        iconSrc: sqlIcon        },
+  { name: "Ollama",     iconSrc: ollamaIcon     },
+  { name: "Git",        iconSrc: gitIcon        },
+  { name: "OpenCv",     iconSrc: opencvIcon     },
+  { name: "Java",       iconSrc: javaIcon       },
+  { name: "Tensorflow", iconSrc: tensorflowIcon },
+  { name: "Keras",      iconSrc: kerasIcon      },
 ];
 
 const education = [
@@ -25,8 +44,12 @@ const education = [
     title: "Lorem ipsum.",
     details: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6", "A-7"],
   },
-  { title: "Dolor sit.", details: ["B-1", "B-2", "B-3", "B-4", "B-5", "B-6", "B-7"] },
+  {
+    title: "Dolor sit.",
+    details: ["B-1", "B-2", "B-3", "B-4", "B-5", "B-6", "B-7"],
+  },
 ];
+
 const certificates = [
   {
     title: "Lorem – 2024",
@@ -67,12 +90,16 @@ export default function TechEduSection() {
     if (newTab === tab) return;
     setTab(newTab);
     setFading(true);
+
+    // measure new dot positions
     window.requestAnimationFrame(() => {
       const items = Array.from(
         measureRef.current.querySelectorAll(".timeline-item")
       );
       setDotTops(items.map((el) => el.offsetTop + 2));
     });
+
+    // swap content after fade-out
     setTimeout(() => {
       setDisplayTab(newTab);
       setFading(false);
@@ -82,12 +109,12 @@ export default function TechEduSection() {
   const listForMeasure = tab === "education" ? education : certificates;
   const listForDisplay = displayTab === "education" ? education : certificates;
 
-  const axisX = tab === "education" ? "16px" : "calc(100% - 16px)";
-  const txtAlign = tab === "education" ? "left" : "right";
-  const padLeft = tab === "education" ? "32px" : "0";
-  const padRight = tab === "education" ? "0" : "32px";
+  const axisX    = tab === "education" ? "16px" : "calc(100% - 16px)";
+  const txtAlign = tab === "education" ? "left"   : "right";
+  const padLeft  = tab === "education" ? "32px"   : "0";
+  const padRight = tab === "education" ? "0"      : "32px";
 
-  // track width to conditionally duplicate
+  // marquee logic
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     const onResize = () => setWidth(window.innerWidth);
@@ -97,15 +124,12 @@ export default function TechEduSection() {
   const isMarquee = width >= 601 && width <= 890;
   const techItems = isMarquee ? [...techStack, ...techStack] : techStack;
 
-  // infinite scroll
   const scrollRef = useRef(null);
   useEffect(() => {
     const el = scrollRef.current;
     if (!el || !isMarquee) return;
     const SPEED = 0.5;
-    let pos = 0;
-    let frame;
-
+    let pos = 0, frame;
     function step() {
       if (!(window.innerWidth >= 601 && window.innerWidth <= 890)) {
         cancelAnimationFrame(frame);
