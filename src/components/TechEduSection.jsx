@@ -1,14 +1,31 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./TechEduSection.css";
 
-const techStack = Array.from({ length: 10 }, (_, i) => `Tech ${i + 1}`);
+const techStack = [
+  { name: "Python", iconSrc: "src/assets/technologies/python.png" },
+  { name: "Figma", iconSrc: "src/assets/technologies/figma.png" },
+  { name: "Pytorch", iconSrc: "src/assets/technologies/pytorch.png" },
+  { name: "React", iconSrc: "src/assets/technologies/react.png" },
+  { name: "Numpy", iconSrc: "src/assets/technologies/numpy.jpg" },
+  { name: "JavaScript", iconSrc: "src/assets/technologies/js.png" },
+  { name: "Huggingface", iconSrc: "src/assets/technologies/huggingface.png" },
+  { name: "ThreeJs", iconSrc: "src/assets/technologies/threejs.png" },
+  { name: "Docker", iconSrc: "src/assets/technologies/docker.webp" },
+  { name: "SQL", iconSrc: "src/assets/technologies/sql-server.png" },
+  { name: "Ollama", iconSrc: "src/assets/technologies/ollama.webp" },
+  { name: "Git", iconSrc: "src/assets/technologies/git.png" },
+  { name: "OpenCv", iconSrc: "src/assets/technologies/opencv.jpg" },
+  { name: "Java", iconSrc: "src/assets/technologies/java.png" },
+  { name: "Tensorflow", iconSrc: "src/assets/technologies/tensorflow.png" },
+  { name: "Keras", iconSrc: "src/assets/technologies/keras_black.png" },
+];
 
 const education = [
   {
     title: "Lorem ipsum.",
-    details: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6"],
+    details: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6", "A-7"],
   },
-  { title: "Dolor sit.", details: ["B-1", "B-2", "B-3", "B-4", "B-5", "B-6"] },
+  { title: "Dolor sit.", details: ["B-1", "B-2", "B-3", "B-4", "B-5", "B-6", "B-7"] },
 ];
 const certificates = [
   {
@@ -26,14 +43,16 @@ const certificates = [
 ];
 
 export default function TechEduSection() {
-  const FADE_OUT = 100; // ms to fade out completely
-  const CONTENT_DELAY = FADE_OUT; // we’ll use same value to delay fade-in
-  const SLIDE_DUR = 350; // unchanged
+  const FADE_OUT = 100;
+  const CONTENT_DELAY = FADE_OUT;
+  const SLIDE_DUR = 350;
 
+  // Tab state
   const [tab, setTab] = useState("education");
   const [displayTab, setDisplayTab] = useState("education");
   const [fading, setFading] = useState(false);
 
+  // Timeline measurement
   const measureRef = useRef(null);
   const [dotTops, setDotTops] = useState([]);
   useEffect(() => {
@@ -48,16 +67,12 @@ export default function TechEduSection() {
     if (newTab === tab) return;
     setTab(newTab);
     setFading(true);
-
-    // Pre-measure the new list’s dot positions
     window.requestAnimationFrame(() => {
       const items = Array.from(
         measureRef.current.querySelectorAll(".timeline-item")
       );
       setDotTops(items.map((el) => el.offsetTop + 2));
     });
-
-    // After fade-out (100ms), swap content and fade in
     setTimeout(() => {
       setDisplayTab(newTab);
       setFading(false);
@@ -67,24 +82,66 @@ export default function TechEduSection() {
   const listForMeasure = tab === "education" ? education : certificates;
   const listForDisplay = displayTab === "education" ? education : certificates;
 
-  // axis + padding logic unchanged
   const axisX = tab === "education" ? "16px" : "calc(100% - 16px)";
   const txtAlign = tab === "education" ? "left" : "right";
   const padLeft = tab === "education" ? "32px" : "0";
   const padRight = tab === "education" ? "0" : "32px";
 
+  // track width to conditionally duplicate
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const onResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  const isMarquee = width >= 601 && width <= 890;
+  const techItems = isMarquee ? [...techStack, ...techStack] : techStack;
+
+  // infinite scroll
+  const scrollRef = useRef(null);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !isMarquee) return;
+    const SPEED = 0.5;
+    let pos = 0;
+    let frame;
+
+    function step() {
+      if (!(window.innerWidth >= 601 && window.innerWidth <= 890)) {
+        cancelAnimationFrame(frame);
+        return;
+      }
+      pos += SPEED;
+      if (pos >= el.scrollWidth / 2) pos = 0;
+      el.scrollLeft = pos;
+      frame = requestAnimationFrame(step);
+    }
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [isMarquee]);
+
   return (
     <section className="tech-edu-wrapper">
       <div className="tech-card">
         <h3 className="card-title">TECHNOLOGIES I USE</h3>
-        <ul className="tech-list">
-          {techStack.map((t) => (
-            <li key={t} className="tech-item">
-              <span className="tech-icon" />
-              <span className="tech-bar" />
-            </li>
-          ))}
-        </ul>
+
+        {/* marquee wrapper */}
+        <div className="tech-scroll" ref={scrollRef}>
+          <ul className="tech-list">
+            {techItems.map(({ name, iconSrc }, idx) => (
+              <li key={idx} className="tech-item">
+                <img
+                  className="tech-icon"
+                  src={iconSrc}
+                  alt={`${name} logo`}
+                  width={32}
+                  height={32}
+                />
+                <span className="tech-title">{name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <div className="edu-card">
@@ -101,7 +158,6 @@ export default function TechEduSection() {
           </button>
         </div>
 
-        {/* Visible timeline */}
         <div className="timeline" style={{ "--axis-x": axisX }}>
           {dotTops.map((top, i) => (
             <span
@@ -143,7 +199,6 @@ export default function TechEduSection() {
           ))}
         </div>
 
-        {/* Hidden measurement container */}
         <div
           ref={measureRef}
           aria-hidden="true"

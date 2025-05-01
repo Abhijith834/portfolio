@@ -2,7 +2,6 @@ import BackgroundTriangles from './components/BackgroundTriangles';
 import Header from './components/Header';
 import Intro from './components/Intro';
 import TechEduSection from "./components/TechEduSection";
-import LongContent from './components/LongContent';
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
       <BackgroundTriangles />
       <Intro />
       <TechEduSection />
-      {/* <LongContent /> */}
     </div>
   );
 }

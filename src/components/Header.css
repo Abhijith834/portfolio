@@ -9,18 +9,15 @@
 /* Base header container */
 .site-header {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  top: 0; left: 0; right: 0;                /* span exactly the viewport */
+  box-sizing: border-box;                   /* include padding in that span */
+  padding: 0 clamp(1rem, 5vw, 2rem);        /* safe to pad now */
   height: clamp(60px, 8vh, 80px);
   background: transparent;
-  /* backdrop-filter: blur(10px); */
-  border-bottom: none;
-  z-index: 10;
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* padding: 0 clamp(1rem, 5vw, 2rem); */
+  justify-content: center;                  /* centers flex children */
+  z-index: 10;
 }
 
 .site-header::after {
@@ -99,7 +96,7 @@
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: color 0.2s;
-  margin-right: 50px;
+  margin-right: 0;
 }
 .header-pill:hover {
   color: #0cf;
@@ -112,20 +109,53 @@
 
 /* — Medium screens (tablets) — */
 @media (max-width: 900px) {
-  .site-header {
-    height: clamp(55px, 7vh, 70px);
-    padding: 0 clamp(0.75rem, 4vw, 1.5rem);
-  }
+    .site-header {
+      padding: 0 clamp(0.75rem, 4vw, 1.5rem);
+      height: clamp(55px, 7vh, 70px);
+    }
+  
+  
+  /* — nav-pill sits in the middle as a normal flex child — */
   .nav-pill {
-    padding: 0 clamp(0.5rem, 3vw, 1rem);
+    /* remove position:absolute/top/left/transform */
+    display: flex;
+    align-items: center;
+    height: var(--pill-height);
+    padding: 0 var(--pill-padding-x);
+    color: white;
+    border: 1px solid white;
+    border-radius: calc(var(--pill-height) / 2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* nav-list, nav-item rules stay the same */
+  
+  /* — header-pill absolutely anchored to the right edge — */
+  .header-pill {
+    position: absolute;
+    top: 50%;
+    right: clamp(1rem, 5vw, 2rem);
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    height: var(--pill-height);
+    padding: 0 var(--pill-padding-x);
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    font-weight: 500;
+    color: white;
+    border: 1px solid white;
+    border-radius: calc(var(--pill-height) / 2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .header-pill:hover {
+    color: #0cf;
   }
   .nav-list {
     gap: clamp(0.5rem, 2vw, 1rem);
   }
-  .header-pill {
-    right: clamp(0.5rem, 4vw, 1rem);
-    font-size: clamp(0.85rem, 1vw, 1rem);
-  }
+
 }
 
 /* — Small screens (mobile) — */
@@ -139,6 +169,10 @@
     padding: 1rem 0.5rem;
   }
 
+  .site-header::after {
+    background: none;
+  }
+
   .nav-pill,
   .header-pill {
     display: none;
@@ -150,22 +184,24 @@
     width: 90vw;
     max-width: 600px;
     margin: 1rem auto;
-    background: white;
+    background: transparent;
     border-radius: 999px;
     padding: 0.5rem 0;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     z-index: 11;
     justify-content: space-between;
     align-items: center;
-    min-height: 48px;
+    height: clamp(20px, 1.8vh, 60px);
+    border: 1px solid white;
+    backdrop-filter: blur(5px);
   }
 
   .combined-item {
     flex: 1;
     text-align: center;
     font-weight: 500;
-    font-size: 1rem;
-    color: #333;
+    font-size: clamp(0.5rem, 2vh, 1rem);
+    color: #fff;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
     padding: 0;

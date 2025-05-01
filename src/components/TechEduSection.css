@@ -20,14 +20,21 @@
 .tech-edu-wrapper {
   margin: 120px auto 0;
   display: flex;
-  gap: 90px;
+  /* gap is 10px if viewport ≤ 860px, then grows until 90px at 950px+, then caps */
+  gap: clamp(
+    40px,
+    calc(100vw - 1100px + 10px),
+    90px
+  );
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
   font-family: "Inter", sans-serif;
   color: #fff;
-  width: 100vw;
+  width: 100%;
+  box-sizing:border-box;
 }
+
 
 /* ── cards with neon glow ───────────────────────── */
 .tech-card,
@@ -45,7 +52,7 @@
 }
 
 /* ── tech list ─────────────────────────────────────────── */
-.tech-card { width: 300px; }
+.tech-card { width: 320px; }
 .card-title {
   margin: 0 0 16px;
   font-size: 14px;
@@ -53,25 +60,52 @@
   text-align: center;
   color: #e0e0e0;
 }
+/* ── updated tech-list rectangles ───────────────────────── */
 .tech-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
+  /* two columns of 16 items → 8 rows */
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px 24px;
+  gap: 8px;
 }
+
 .tech-item {
   display: flex;
+  height: 16px;
   align-items: center;
   gap: 12px;
+  padding: 12px 16px;
+  border: 2px solid rgb(var(--neon-rgb));
+  border-radius: 8px;
+  background: #040b14;
+  /* neon glow */
+  box-shadow:
+    inset 0 0 calc(var(--glow-inner)) rgb(var(--neon-rgb)/0.4),
+    0 0 calc(var(--glow-mid))          rgb(var(--neon-rgb)/0.4),
+    0 0 calc(var(--glow-outer))        rgb(var(--neon-rgb)/0.3);
 }
+
 .tech-icon {
-  width: 20px;
-  height: 20px;
-  background: #555;
+  width: 32px;
+  height: 32px;
   border-radius: 4px;
+  background: #000000;
+  object-fit: cover;    /* ← preserve aspect ratio */
+  object-position: center;
+  display: block;
+  /* border: 1px solid #535353; */
+
 }
+
+.tech-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+}
+
 .tech-bar {
   flex: 1;
   height: 20px;
@@ -214,24 +248,24 @@
   .tech-edu-wrapper {
     gap: 40px;
     padding: 0 16px;
+    align-items: center;
+    flex-direction: column-reverse;
   }
   .tab {
     font-size: 12px;
     padding: 10px 0;
   }
+  
 }
 @media (max-width: 600px) {
   .tech-edu-wrapper {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
     margin-top: 80px;
   }
-  .tech-list {
-    grid-template-columns: 1fr;
-    gap: 8px 0;
-  }
+
   .tech-card, .edu-card {
-    width: 100%;
+    width: 90%;
     padding: 16px;
     box-shadow:
       inset 0 0 var(--glow-inner) rgb(var(--neon-rgb)/0.5),
@@ -249,6 +283,24 @@
     font-size: 12px;
   }
 }
+
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .tech-card {
+    width: 90%;
+  }
+  .tech-scroll {
+    overflow: hidden;
+    width: 100%;
+  }
+  .tech-list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px; /* same gap as grid */
+  }
+}
+
+
 @media (max-width: 400px) {
   .tab {
     font-size: 11px;
