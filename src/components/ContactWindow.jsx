@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './ContactWindow.css';
 
-import emailIcon    from '../assets/Figma.png';
-import linkedinIcon from '../assets/linkedin.png';
-import githubIcon   from '../assets/github.png';
+import emailIcon    from '../assets/email.svg';
+import linkedinIcon from '../assets/linkedin.svg';
+import githubIcon   from '../assets/github.svg';
 
 export default function ContactWindow({ open, onClose }) {
   /* keep the node mounted long enough for the exit animation */

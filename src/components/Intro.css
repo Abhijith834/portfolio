@@ -51,6 +51,7 @@
 .link-btn:hover {
   transform: translateY(-2px);
   border-color: rgb(var(--glow));
+  filter:drop-shadow(0 0 var(--glow-mid) rgb(var(--glow) / 0.8));
 }
 
 .intro-title {
@@ -143,13 +144,13 @@
   transform: translateY(-2px);
 }
 .li {
-  background-image: url("../assets/linkedin.png");
+  background-image: url("../assets/linkedin.svg");
 }
 .gh {
-  background-image: url("../assets/github.png");
+  background-image: url("../assets/github.svg");
 }
 .gm {
-  background-image: url("../assets/Figma.png");
+  background-image: url("../assets/figma.svg");
 }
 
 .intro-text {

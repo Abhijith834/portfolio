@@ -274,6 +274,31 @@
   .timeline-content ul {
     font-size: 12px;
   }
+  .tech-scroll {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .tech-list {
+    display: grid;
+    grid-auto-flow: column;               /* fill into columns */
+    grid-template-rows: repeat(2, auto);  /* exactly two rows */
+    grid-auto-columns: min-content;       /* each column as wide as its content */
+    gap: 8px;                             /* match your grid gap */
+    padding-bottom: 8px;                  /* space below items */
+  }
+
+  /* Optional: hide the default vertical scroll-bar */
+  .tech-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+  .tech-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+  }
+  .tech-item:nth-child(2n) {
+    transform: translateX(50%);
+  }
 }
 
 

@@ -121,7 +121,7 @@ export default function TechEduSection() {
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
-  const isMarquee = width >= 601 && width <= 890;
+  const isMarquee = width <= 890;
   const techItems = isMarquee ? [...techStack, ...techStack] : techStack;
 
   const scrollRef = useRef(null);
@@ -131,10 +131,7 @@ export default function TechEduSection() {
     const SPEED = 0.1;
     let pos = 0, frame;
     function step() {
-      if (!(window.innerWidth >= 601 && window.innerWidth <= 890)) {
-        cancelAnimationFrame(frame);
-        return;
-      }
+
       pos += SPEED;
       if (pos >= el.scrollWidth / 2) pos = 0;
       el.scrollLeft = pos;
