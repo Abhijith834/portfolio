@@ -13,9 +13,11 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^12.9.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "three": "^0.176.0"
   },
   "devDependencies": {

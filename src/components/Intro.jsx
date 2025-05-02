@@ -31,9 +31,9 @@ const Intro = () => {
       </div>
 
       <div className="intro-links">
-        <a href="https://www.linkedin.com/in/your-id" aria-label="LinkedIn" className="link-btn li" />
-        <a href="https://github.com/your-id"           aria-label="GitHub"   className="link-btn gh" />
-        <a href="mailto:you@example.com"               aria-label="E-mail"   className="link-btn gm" />
+        <a href="https://linkedin.com/in/abhijith-saji-1b9735239" aria-label="LinkedIn" className="link-btn li" />
+        <a href="https://github.com/Abhijith834"           aria-label="GitHub"   className="link-btn gh" />
+        <a href="https://www.figma.com/"               aria-label="Figma"   className="link-btn gm" />
       </div>
 
       <p className="intro-text">

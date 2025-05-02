@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+// src/components/ContactWindow.jsx
+
+import React, { useEffect, useState, useRef } from 'react';
+import emailjs from 'emailjs-com';
 import './ContactWindow.css';
 
 import emailIcon    from '../assets/email.svg';
@@ -8,6 +11,8 @@ import githubIcon   from '../assets/github.svg';
 export default function ContactWindow({ open, onClose }) {
   /* keep the node mounted long enough for the exit animation */
   const [shouldRender, setShouldRender] = useState(open);
+  const formRef = useRef();
+  const [sending, setSending] = useState(false);
 
   /* lock body scroll only while visible */
   useEffect(() => {
@@ -16,17 +21,47 @@ export default function ContactWindow({ open, onClose }) {
   }, [open]);
 
   const handleAnimEnd = () => {
-    if (!open) setShouldRender(false);      // unmount after fade‑out
+    if (!open) setShouldRender(false); // unmount after fade-out
   };
 
-  /* form state -------------------------------------------------- */
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const handleChange = e =>
-    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   const handleSubmit = e => {
     e.preventDefault();
-    alert('Thanks for your message!');
-    setForm({ name: '', email: '', message: '' });
+    setSending(true);
+
+    // Load your Vite env vars (must start with VITE_)
+    const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const USER_ID     = import.meta.env.VITE_EMAILJS_USER_ID;
+
+    console.log('SERVICE_ID ->', JSON.stringify(SERVICE_ID));
+    console.log('TEMPLATE_ID ->', JSON.stringify(TEMPLATE_ID));
+    console.log('USER_ID     ->', JSON.stringify(USER_ID));
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !USER_ID) {
+      alert(
+        '⚠️ EmailJS config error: one or more environment variables are missing.\n' +
+        'Please check your .env.local file at your project root.'
+      );
+      setSending(false);
+      return;
+    }
+
+    emailjs.sendForm(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      formRef.current,
+      USER_ID
+    )
+    .then(() => {
+      alert('✅ Message sent! Thanks for reaching out.');
+      setSending(false);
+      onClose();
+    })
+    .catch(err => {
+      console.error('EmailJS error:', err);
+      alert('❌ Oops, something went wrong. Please try again later.');
+      setSending(false);
+    });
   };
 
   if (!shouldRender) return null;
@@ -43,33 +78,41 @@ export default function ContactWindow({ open, onClose }) {
           className="close-btn"
           aria-label="Close"
           onClick={onClose}
-        >
-          ✕
-        </button>
+        >✕</button>
 
         {/* ---------- FORM ---------- */}
         <h3 className="contact-title">GET IN TOUCH</h3>
 
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form
+          ref={formRef}
+          className="contact-form"
+          onSubmit={handleSubmit}
+        >
+          {/* Hidden field: you can also hard-code your email in the EmailJS template */}
+          <input
+            type="hidden"
+            name="to_email"
+            value="your-email@example.com"
+          />
+
           <div className="field-group">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="from_name">Name</label>
             <input
-              id="name"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
+              id="from_name"
+              name="from_name"
+              type="text"
+              placeholder="Your name"
               required
             />
           </div>
 
           <div className="field-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="reply_to">Email</label>
             <input
-              id="email"
+              id="reply_to"
+              name="reply_to"
               type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
+              placeholder="your@example.com"
               required
             />
           </div>
@@ -80,24 +123,27 @@ export default function ContactWindow({ open, onClose }) {
               id="message"
               name="message"
               rows="5"
-              value={form.message}
-              onChange={handleChange}
+              placeholder="What’s on your mind?"
               required
             />
           </div>
 
-          <button type="submit" className="submit-btn">
-            Send&nbsp;Message
+          <button
+            type="submit"
+            className="submit-btn"
+            disabled={sending}
+          >
+            {sending ? 'Sending…' : 'Send Message'}
           </button>
         </form>
 
         {/* ---------- SOCIAL LINKS ---------- */}
         <div className="contact-links">
-          <a href="mailto:you@example.com" aria-label="Email">
+          <a href="mailto:your-email@example.com" aria-label="Email">
             <img src={emailIcon} alt="Email" />
           </a>
           <a
-            href="https://www.linkedin.com/in/your-id"
+            href="https://linkedin.com/in/your-id"
             aria-label="LinkedIn"
             target="_blank"
             rel="noreferrer"

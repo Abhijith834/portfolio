@@ -10,21 +10,21 @@ const Footer = () => (
       </span>
       <div className="footer-links">
         <a
-          href="https://www.linkedin.com/in/your-id"
+          href="https://linkedin.com/in/abhijith-saji-1b9735239"
           aria-label="LinkedIn"
           className="link-btn li"
           target="_blank"
           rel="noopener noreferrer"
         />
         <a
-          href="https://github.com/your-id"
+          href="https://github.com/Abhijith834"
           aria-label="GitHub"
           className="link-btn gh"
           target="_blank"
           rel="noopener noreferrer"
         />
         <a
-          href="mailto:you@example.com"
+          href="https://www.figma.com/"
           aria-label="E‑mail"
           className="link-btn gm"
         />
