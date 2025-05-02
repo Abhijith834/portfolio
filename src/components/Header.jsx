@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ onContactClick, onResumeClick }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -13,18 +13,22 @@ const Header = () => {
     <header className={`site-header${scrolled ? " scrolled" : ""}`}>
       <div className="nav-pill">
         <ul className="nav-list">
-          <li className="nav-item">Home</li>
-          <li className="nav-item">Projects</li>
-          <li className="nav-item">Contact</li>
+          <li className="nav-item">
+            <a href="#">Home </a>
+          </li>
+          <li className="nav-item">
+            <a href="#projects">Projects</a>
+          </li>
+          <li className="nav-item" onClick={onContactClick}>Contact</li>
         </ul>
       </div>
-      <div className="header-pill">Resume</div>
+      <div className="header-pill" onClick={onResumeClick}>Resume</div>
 
       <div className="combined-pill">
-        <div className="combined-item">Home</div>
-        <div className="combined-item">Projects</div>
-        <div className="combined-item">Contact</div>
-        <div className="combined-item">Resume</div>
+        <div className="combined-item"><a href="#">Home </a></div>
+        <div className="combined-item"><a href="#projects">Projects</a></div>
+        <div className="combined-item" onClick={onContactClick}>Contact</div>
+        <div className="combined-item" onClick={onResumeClick}>Resume</div>
       </div>
     </header>
   );

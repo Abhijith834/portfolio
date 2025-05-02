@@ -1,0 +1,71 @@
+/* ── keyframes (same easing as ContactWindow) ─────────────── */
+@keyframes overlayIn  { from{opacity:0} to{opacity:1} }
+@keyframes overlayOut { from{opacity:1} to{opacity:0} }
+
+@keyframes modalIn  {
+  from{opacity:0; transform:translateY(24px) scale(.96)}
+  to  {opacity:1; transform:translateY(0)    scale(1)}
+}
+@keyframes modalOut {
+  from{opacity:1; transform:translateY(0)    scale(1)}
+  to  {opacity:0; transform:translateY(20px) scale(.96)}
+}
+
+/* ── overlay ─────────────────────────────────────────────── */
+.resume-overlay{
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.6); backdrop-filter:blur(4px); z-index:999;
+}
+.resume-overlay.open { animation:overlayIn 250ms ease forwards }
+.resume-overlay.close{ animation:overlayOut 200ms ease forwards }
+
+/* ── modal shell ─────────────────────────────────────────── */
+.resume-modal{
+  position:relative;
+  width:min(360px,90vw);
+  padding:22px 20px 18px;
+  border:2px solid rgb(var(--glow));
+  border-radius:12px;
+  box-shadow:inset 0 0 var(--glow-inner) rgb(var(--glow)/.6),
+             0 0 var(--glow-mid)         rgb(var(--glow)/.8),
+             0 0 var(--glow-outer)       rgb(var(--glow)/.6);
+  background:#040b14; color:#fff; font-family:"Inter",sans-serif;
+}
+.resume-modal.open { animation:modalIn 300ms cubic-bezier(.22,1,.36,1) forwards }
+.resume-modal.close{ animation:modalOut 240ms cubic-bezier(.55,.06,.68,.19) forwards }
+
+/* close icon */
+.close-btn{
+  position:absolute; top:10px; right:12px;
+  font-size:28px; background:none; border:none; color:#fff; cursor:pointer;
+}
+.close-btn:hover{color:rgb(var(--glow))}
+
+/* title */
+.resume-title{margin:0 0 18px; font-size:16px; letter-spacing:.04em; text-align:center}
+
+/* dropdown + button layout */
+.controls{display:flex; gap:14px; justify-content:center}
+
+.ext-select{
+  flex:1;
+  padding:8px 10px;
+  font-size:14px;
+  border:2px solid rgb(var(--glow));
+  border-radius:6px;
+  background:#000; color:#fff;
+  outline:none;
+}
+
+/* download button (styled like other glowing buttons) */
+.download-btn{
+  padding:8px 20px;
+  font-size:14px; font-weight:600;
+  border:2px solid rgb(var(--glow));
+  border-radius:6px;
+  background:none; color:#fff; text-decoration:none;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:background .2s,color .2s;
+}
+.download-btn:hover{background:rgb(var(--glow)); color:#000}

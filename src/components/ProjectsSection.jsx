@@ -41,7 +41,7 @@ const projects = [
 ];
 
 const ProjectsSection = () => (
-  <section className="projects-wrapper">
+  <section id="projects" className="projects-wrapper">
     <h3 className="projects-title">PROJECTS</h3>
     <div className="projects-grid">
       {projects.map((proj, idx) => (

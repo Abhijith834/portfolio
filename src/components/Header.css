@@ -1,8 +1,5 @@
-/* src/components/Header.css */
-
-/* — Custom Properties — */
 :root {
-  --pill-height: clamp(0.5rem, 3vh, 2.5rem);  /* adjustable pill height */
+  --pill-height: clamp(1.8rem, 3vh, 2.5rem);  /* adjustable pill height */
   --pill-padding-x: clamp(0.5rem, 3vw, 1rem); /* horizontal padding */
 }
 
@@ -87,7 +84,23 @@
 .nav-item:active {
   background-color: rgba(0, 204, 255, 0.2);
 }
+/* src/components/Header.css */
+.nav-item a,
+.combined-item {
+  display: block;          /* fill the pill */
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
 
+.combined-item a {
+  text-decoration: none;
+  color: inherit;
+}
+#projects {
+  scroll-margin-top: 90px;   /* ≈ header height; tweak if you change the header */
+}
 /* Right-aligned profile pill */
 .header-pill {
   position: absolute;
@@ -191,32 +204,33 @@
 
   .combined-pill {
     display: flex;
-    position: static;
+    justify-content: space-between;
+    align-items: center;       /* centers children vertically */
     width: 90vw;
     max-width: 600px;
     margin: 1rem auto;
-    background: transparent;
-    border-radius: 999px;
     padding: 0.5rem 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    z-index: 11;
-    justify-content: space-between;
-    align-items: center;
     height: clamp(20px, 1.8vh, 60px);
+    background: transparent;
     border: 1px solid white;
+    border-radius: 999px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     backdrop-filter: blur(5px);
+    z-index: 11;
   }
-
+  
   .combined-item {
-    flex: 1;
-    text-align: center;
-    font-weight: 500;
+    flex: 1;                  
+    display: flex;            /* make each item a flex container */
+    align-items: center;      /* vertical center */
+    justify-content: center;  /* horizontal center */
+    height: 100%;             /* fill the pill’s height */
+    padding: 0;               
     font-size: clamp(0.5rem, 2vh, 1rem);
+    font-weight: 500;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
-    padding: 0;
-    line-height: 1;
   }
   .combined-item:hover {
     background-color: rgba(0, 204, 255, 0.1);

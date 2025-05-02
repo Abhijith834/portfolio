@@ -13,4 +13,5 @@ body,
   padding: 0;
   font-family: 'Inter';
   font-size: 22px;
+  scroll-behavior: smooth;
 }
