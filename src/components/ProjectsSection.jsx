@@ -51,7 +51,7 @@ const ProjectsSection = () => (
 
           {/* 2. Image */}
           <div className="project-image">
-            <img src={proj.imageSrc} alt={proj.title} />
+            <img src={proj.imageSrc} alt={proj.title} loading="lazy"/>
           </div>
 
           {/* 3. Description */}

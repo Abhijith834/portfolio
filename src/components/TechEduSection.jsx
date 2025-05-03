@@ -41,11 +41,11 @@ const techStack = [
 
 const education = [
   {
-    title: "Lorem ipsum.",
+    title: "University of Hertfordshire (2022 - present)",
     details: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6", "A-7"],
   },
   {
-    title: "Dolor sit.",
+    title: "Montfort School Anakkara (2019 - 2021)",
     details: ["B-1", "B-2", "B-3", "B-4", "B-5", "B-6", "B-7"],
   },
 ];
