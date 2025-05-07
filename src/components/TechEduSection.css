@@ -1,8 +1,8 @@
 :root {
   --dot-size: 14px;
-  --gap: 2px;                 /* gap between dot ring & line */
-  --fade-dur: 100ms;          /* fade‐out & fade‐in duration */
-  --slide-dur: 35ms;          /* retained but not used for horizontal */
+  --gap: 2px; /* gap between dot ring & line */
+  --fade-dur: 100ms; /* fade‐out & fade‐in duration */
+  --slide-dur: 35ms; /* retained but not used for horizontal */
   --content-delay: var(--fade-dur);
 
   /* glow radii */
@@ -16,20 +16,15 @@
   margin: 120px auto 0;
   display: flex;
   /* gap is 10px if viewport ≤ 860px, then grows until 90px at 950px+, then caps */
-  gap: clamp(
-    40px,
-    calc(100vw - 1100px + 10px),
-    90px
-  );
+  gap: clamp(40px, calc(100vw - 1100px + 10px), 90px);
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
   font-family: "Inter", sans-serif;
   color: #fff;
   width: 100%;
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
-
 
 .tech-card,
 .edu-card {
@@ -38,14 +33,15 @@
   padding: 24px;
 
   /* inset + two outer glows */
-  box-shadow:
-    inset 0 0 var(--glow-inner) rgb(var(--glow)/0.6),
-    0 0 var(--glow-mid)          rgb(var(--glow)/0.8),
-    0 0 var(--glow-outer)        rgb(var(--glow)/0.6);
+  box-shadow: inset 0 0 var(--glow-inner) rgb(var(--glow) / 0.6),
+    0 0 var(--glow-mid) rgb(var(--glow) / 0.8),
+    0 0 var(--glow-outer) rgb(var(--glow) / 0.6);
 }
 
 /* ── tech list ─────────────────────────────────────────── */
-.tech-card { width: 320px; }
+.tech-card {
+  width: 320px;
+}
 .card-title {
   margin: 0 0 16px;
   font-size: 14px;
@@ -73,10 +69,9 @@
   border: 2px solid rgb(var(--glow));
   border-radius: 8px;
   background: #040b14;
-  box-shadow:
-    inset 0 0 calc(var(--glow-inner)) rgb(var(--glow)/0.4),
-    0 0 calc(var(--glow-mid))          rgb(var(--glow)/0.4),
-    0 0 calc(var(--glow-outer))        rgb(var(--glow)/0.3);
+  box-shadow: inset 0 0 calc(var(--glow-inner)) rgb(var(--glow) / 0.4),
+    0 0 calc(var(--glow-mid)) rgb(var(--glow) / 0.4),
+    0 0 calc(var(--glow-outer)) rgb(var(--glow) / 0.3);
 }
 
 .tech-icon {
@@ -84,11 +79,10 @@
   height: 32px;
   border-radius: 4px;
   background: #000000;
-  object-fit: cover;    /* ← preserve aspect ratio */
+  object-fit: cover; /* ← preserve aspect ratio */
   object-position: center;
   display: block;
   /* border: 1px solid #535353; */
-
 }
 
 .tech-title {
@@ -106,7 +100,9 @@
 }
 
 /* ── tab selector ──────────────────────────────────────── */
-.edu-card { width: min(560px, 90vw); }
+.edu-card {
+  width: min(560px, 90vw);
+}
 .tab-bar {
   position: relative;
   display: flex;
@@ -123,7 +119,7 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background: rgba(0,192,255,0.125);
+  background: rgba(0, 192, 255, 0.125);
   transition: left 0.3s ease;
   border-radius: 4px;
   z-index: 1;
@@ -131,7 +127,7 @@
 .tab {
   flex: 1;
   padding: 12px 0;
-  font: 600 13px/1 "Inter",sans-serif;
+  font: 600 13px/1 "Inter", sans-serif;
   letter-spacing: 0.05em;
   background: none;
   border: none;
@@ -140,7 +136,9 @@
   z-index: 2;
   transition: color 0.2s;
 }
-.tab:hover { color: rgb(var(--glow)); }
+.tab:hover {
+  color: rgb(var(--glow));
+}
 
 /* ── timeline (line & dots) ────────────────────────────── */
 .timeline {
@@ -150,7 +148,8 @@
 .timeline::before {
   content: "";
   position: absolute;
-  top: 0; bottom: 0;
+  top: 0;
+  bottom: 0;
   left: var(--axis-x);
   width: 2px;
   background: rgb(var(--glow));
@@ -173,8 +172,22 @@
 .timeline-item.fade-out {
   animation: fade-out var(--fade-dur) ease-in-out forwards;
 }
-@keyframes fade-in   { from { opacity: 0 } to { opacity: 1 } }
-@keyframes fade-out  { from { opacity: 1 } to { opacity: 0 } }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 
 /* Remove any horizontal slide: just fade */
 .timeline-content {
@@ -183,8 +196,34 @@
 }
 .timeline-content.slide-in-left,
 .timeline-content.slide-in-right {
-  animation:
-    fade-in var(--fade-dur) ease-in-out var(--content-delay) forwards;
+  animation: fade-in var(--fade-dur) ease-in-out var(--content-delay) forwards;
+}
+/* keep default left‐side padding for Education */
+.timeline-content.slide-in-left ul {
+  padding-left: 16px;
+}
+
+/* flip padding so bullets sit on the right for Certificates */
+.timeline-content.slide-in-right ul {
+  direction: rtl;
+  padding-left: 0;
+}
+
+/* insert link.ico after every timeline title */
+.timeline-content.slide-in-right h4::after {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+  background: url("../assets/link.ico") no-repeat center;
+  background-size: contain;
+  vertical-align: middle;
+  filter: invert(1);
+}
+/* dim the link icon when hovering its title */
+.timeline-content.slide-in-right h4:hover::after {
+  opacity: 0.6;
 }
 
 /* moving dots */
@@ -198,9 +237,7 @@
   background: #040b14;
   box-shadow: 0 0 0 var(--gap) #040b14;
   transform: translateZ(0);
-  transition:
-    left 0.2s ease-in-out,
-    top  0.2s ease-in-out;
+  transition: left 0.2s ease-in-out, top 0.2s ease-in-out;
   will-change: left, top;
   z-index: 1;
 }
@@ -211,13 +248,32 @@
   font-size: 15px;
   font-weight: 600;
 }
+/* remove underline from the link in the title */
+.timeline-content h4 a {
+  text-decoration: none;
+  color: inherit;
+}
+.timeline-content h4 a:hover,
+.timeline-content h4 a:focus {
+  opacity: 0.6;
+}
+
 .timeline-content ul {
   margin: 0;
-  font-size: 13px;
-  opacity: 0.8;
 }
 .timeline-content li {
   margin-bottom: 4px;
+}
+
+.timeline-content p {
+  list-style: none;
+  font-weight: 1000;
+  font-size: 14px;
+  opacity: 1;
+}
+.timeline-content ul li {
+  opacity: 0.8;
+  font-size: 13px;
 }
 
 /* ── responsive glow radii ───────────────────────── */
@@ -247,7 +303,6 @@
     font-size: 12px;
     padding: 10px 0;
   }
-  
 }
 @media (max-width: 600px) {
   .tech-edu-wrapper {
@@ -256,13 +311,13 @@
     margin-top: 80px;
   }
 
-  .tech-card, .edu-card {
+  .tech-card,
+  .edu-card {
     width: 90%;
     padding: 16px;
-    box-shadow:
-      inset 0 0 var(--glow-inner) rgb(var(--glow)/0.5),
-      0 0 var(--glow-mid)          rgb(var(--glow)/0.6),
-      0 0 var(--glow-outer)        rgb(var(--glow)/0.5);
+    box-shadow: inset 0 0 var(--glow-inner) rgb(var(--glow) / 0.5),
+      0 0 var(--glow-mid) rgb(var(--glow) / 0.6),
+      0 0 var(--glow-outer) rgb(var(--glow) / 0.5);
   }
   .card-title {
     font-size: 13px;
@@ -281,11 +336,11 @@
 
   .tech-list {
     display: grid;
-    grid-auto-flow: column;               /* fill into columns */
-    grid-template-rows: repeat(2, auto);  /* exactly two rows */
-    grid-auto-columns: min-content;       /* each column as wide as its content */
-    gap: 8px;                             /* match your grid gap */
-    padding-bottom: 8px;                  /* space below items */
+    grid-auto-flow: column; /* fill into columns */
+    grid-template-rows: repeat(2, auto); /* exactly two rows */
+    grid-auto-columns: min-content; /* each column as wide as its content */
+    gap: 8px; /* match your grid gap */
+    padding-bottom: 8px; /* space below items */
   }
 
   /* Optional: hide the default vertical scroll-bar */
@@ -293,14 +348,13 @@
     height: 6px;
   }
   .tech-scroll::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 3px;
   }
   .tech-item:nth-child(2n) {
     transform: translateX(50%);
   }
 }
-
 
 @media (min-width: 601px) and (max-width: 900px) {
   .tech-card {
@@ -316,7 +370,6 @@
     gap: 8px; /* same gap as grid */
   }
 }
-
 
 @media (max-width: 400px) {
   .tab {
