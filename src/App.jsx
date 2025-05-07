@@ -10,7 +10,7 @@ import ContactWindow from "./components/ContactWindow";
 import ResumeWindow from "./components/ResumeWindow";
 
 function App() {
-  // useScrollGlow();
+  useScrollGlow();
   const [showContact, setShowContact] = useState(false);
   const [showResume, setShowResume] = useState(false);
 

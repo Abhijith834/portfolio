@@ -1,8 +1,11 @@
 /* src/components/TriangleNet.css */
 
 :root {
-    /* adjust these two to change your net’s look: */
-    --triangle-line-color: #0c1c2b;
+  --triangle-line-color: color-mix(
+    in srgb,
+    rgb(var(--glow)) 20%,
+    black 80%
+  );
     /* --triangle-line-color: #0c1c2b; */
     /* --triangle-line-color: #214261; */
     --triangle-background-color: #000000;

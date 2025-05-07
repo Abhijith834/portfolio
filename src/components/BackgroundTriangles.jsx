@@ -6,36 +6,43 @@ const BackgroundTriangles = () => {
   const mountRef = useRef(null);
 
   useEffect(() => {
+    const root = document.documentElement;
+
+    // Helper: parse the "--glow: 56 189 248" CSS var into [56,189,248]
+    const parseGlow = () => {
+      const glowRaw = getComputedStyle(root)
+        .getPropertyValue('--glow')
+        .trim();                 // e.g. "56 189 248"
+      return glowRaw.split(/\s+/).map(Number);
+    };
+
+    // Helper: take [r,g,b], apply factor k, return "rgb(r,g,b)"
+    const computeDarkColor = () => {
+      const [r, g, b] = parseGlow();
+      const k = 0.2;             // 20% brightness → 80% darker
+      const dr = Math.round(r * k);
+      const dg = Math.round(g * k);
+      const db = Math.round(b * k);
+      return `rgb(${dr},${dg},${db})`;
+    };
+
     const container = mountRef.current;
     if (!container) return;
 
     // ─── CONFIGURATION ──────────────────────────────────────────────────────────
-    // Screen dimensions
-    const width  = window.innerWidth;
-    const height = window.innerHeight;
-
-    // Triangle grid settings
-    const triangleSize = 60;                   // side length of each triangle (px)
-    const rowHeight    = Math.sqrt(3) / 2 * triangleSize; // vertical spacing between rows
-
-    // Interactive “shard” behavior
-    const cursorRadius = 120;                  // how far the mouse effect reaches (px)
-    const cursorStrength = 1;                  // how strongly shards rotate toward cursor
-    const cursorEase = 0.1;                    // how quickly shards ease into rotation
-
-    // Passive wave animation
-    const waveAmp   = 5;                       // wave amplitude (px)
-    const waveSpeed = 0.3;                     // wave cycles per second
-    const waveFreq  = 0.005;                   // spatial frequency of the wave
-
-    // Material color (reads CSS var or falls back)
-    const lineColor = getComputedStyle(document.documentElement)
-      .getPropertyValue('--triangle-line-color').trim() || '#00ffff';
-      // .getPropertyValue('--triangle-line-color').trim() || '#00ffff';
+    const width        = window.innerWidth;
+    const height       = window.innerHeight;
+    const triangleSize = 60;
+    const rowHeight    = Math.sqrt(3) / 2 * triangleSize;
+    const cursorRadius = 120;
+    const cursorEase   = 0.1;
+    const waveAmp      = 5;
+    const waveSpeed    = 0.3;
+    const waveFreq     = 0.005;
     // ─────────────────────────────────────────────────────────────────────────────
 
-    // Scene & orthographic camera
-    const scene  = new THREE.Scene();
+    // ─── THREE.JS SETUP ─────────────────────────────────────────────────────────
+    const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(
       -width/2, width/2,
        height/2, -height/2,
@@ -43,16 +50,18 @@ const BackgroundTriangles = () => {
     );
     camera.position.z = 5;
 
-    // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
+    // Initial material color from CSS var
+    let lineColor = computeDarkColor();
+    const material = new THREE.LineBasicMaterial({ color: lineColor });
+
     // Build shards array
     const cols   = Math.ceil(width / triangleSize) * 2;
     const rows   = Math.ceil(height / rowHeight) + 1;
-    const material = new THREE.LineBasicMaterial({ color: lineColor });
     const shards = [];
 
     for (let r = 0; r < rows; r++) {
@@ -61,16 +70,13 @@ const BackgroundTriangles = () => {
         const y0 = r * rowHeight       - height / 2;
         const up = (c + r) % 2 === 0;
 
-        // Local vertex coords for one triangle
         const pts = up
           ? [[0,0], [triangleSize/2,rowHeight], [triangleSize,0]]
           : [[0,rowHeight], [triangleSize/2,0],  [triangleSize,rowHeight]];
 
-        // Compute centroid for positioning & rotation pivot
         const cx = (pts[0][0] + pts[1][0] + pts[2][0]) / 3 + x0;
         const cy = (pts[0][1] + pts[1][1] + pts[2][1]) / 3 + y0;
 
-        // Build geometry centered at centroid
         const geom = new THREE.BufferGeometry();
         const verts = [];
         for (let i = 0; i < 3; i++) {
@@ -85,8 +91,10 @@ const BackgroundTriangles = () => {
         mesh.position.set(cx, cy, 0);
         scene.add(mesh);
 
-        // Original angle of first corner (for rotation math)
-        const ov = new THREE.Vector2(pts[0][0] + x0 - cx, pts[0][1] + y0 - cy);
+        const ov = new THREE.Vector2(
+          pts[0][0] + x0 - cx,
+          pts[0][1] + y0 - cy
+        );
         const origAng = Math.atan2(ov.y, ov.x);
 
         shards.push({ mesh, bx: cx, by: cy, cx, cy, origAng, rot: 0 });
@@ -109,10 +117,17 @@ const BackgroundTriangles = () => {
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
 
+      // — Dynamic color update —
+      const newColor = computeDarkColor();
+      if (newColor !== lineColor) {
+        material.color.set(newColor);
+        lineColor = newColor;
+      }
+
+      const t = clock.getElapsedTime();
       for (let s of shards) {
-        // — Rotate shard toward cursor if within radius —
+        // Rotate toward cursor
         const dx = mouse.x - s.cx;
         const dy = mouse.y - s.cy;
         const dist = Math.hypot(dx, dy);
@@ -125,14 +140,12 @@ const BackgroundTriangles = () => {
         s.rot += (targetRot - s.rot) * cursorEase;
         s.mesh.rotation.z = s.rot;
 
-        // — Passive wave on vertical position —
+        // Passive wave
         const wave = waveAmp * Math.sin(
           t * Math.PI * 2 * waveSpeed + s.bx * waveFreq
         );
         s.mesh.position.x = s.bx;
         s.mesh.position.y = s.by + wave;
-
-        // Store for next frame’s cursor math
         s.cx = s.mesh.position.x;
         s.cy = s.mesh.position.y;
       }
@@ -141,7 +154,7 @@ const BackgroundTriangles = () => {
     };
     animate();
 
-    // Cleanup on unmount
+    // Cleanup
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
       if (container && renderer.domElement) {
