@@ -1,6 +1,8 @@
+/* src/components/ProjectsSection.css */
 :root {
   --proj-card-w: 460px;
   --proj-gap: clamp(40px, calc(100vw - 1100px + 10px), 90px);
+  /* glow vars assumed already defined elsewhere */
 }
 
 .projects-wrapper {
@@ -8,7 +10,6 @@
   width: 100%;
   text-align: center;
   color: #fff;
-  justify-content: center;
 }
 
 .projects-title {
@@ -36,17 +37,19 @@
   border: 2px solid rgb(var(--glow));
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: inset 0 0 var(--glow-inner) rgb(var(--glow) / 0.6),
-    0 0 var(--glow-mid) rgb(var(--glow) / 0.8),
-    0 0 var(--glow-outer) rgb(var(--glow) / 0.6);
+  box-shadow:
+    inset 0 0 var(--glow-inner) rgb(var(--glow)/0.6),
+    0 0 var(--glow-mid)          rgb(var(--glow)/0.8),
+    0 0 var(--glow-outer)        rgb(var(--glow)/0.6);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .project-card:hover {
   transform: translateY(-4px);
-  box-shadow: inset 0 0 var(--glow-inner) rgb(var(--glow) / 0.8),
-    0 0 var(--glow-mid) rgb(var(--glow) / 1),
-    0 0 calc(var(--glow-outer) * 1.2) rgb(var(--glow) / 0.8);
+  box-shadow:
+    inset 0 0 var(--glow-inner) rgb(var(--glow)/0.8),
+    0 0 var(--glow-mid)          rgb(var(--glow)/1),
+    0 0 calc(var(--glow-outer) * 1.2) rgb(var(--glow)/0.8);
 }
 
 .project-name {
@@ -54,28 +57,40 @@
   font-size: 1.2rem;
   font-weight: 600;
 }
-.project-image {
-  width: 100%;
-  height: 0;
-  padding-bottom: 56.25%;
+
+/* Media container */
+.project-media {
   position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
   background: #1a1f2e;
-  aspect-ratio: 3 / 2;
   overflow: hidden;
 }
-.project-image img {
+
+.project-media .project-image,
+.project-media img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
+.project-media .project-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 .project-desc {
   margin: 8px 16px 16px;
   font-size: 0.9rem;
   line-height: 1.4;
   opacity: 0.85;
 }
+
 .project-link {
   display: inline-block;
   margin: 0 0 16px;
@@ -86,16 +101,21 @@
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s, text-shadow 0.2s;
 }
+
 .project-link:hover {
   border-color: rgb(var(--glow));
   text-shadow: 0 0 6px rgb(var(--glow));
+}
+
+.project-live-link {
+  margin-left: 16px;
 }
 
 @media (max-width: 600px) {
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 24px;
-    justify-items: center; /* center each card */
+    justify-items: center;
   }
   .project-card {
     width: 90%;
