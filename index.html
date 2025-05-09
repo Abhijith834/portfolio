@@ -2,8 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="google-site-verification" content="mneL-s02YaCixOQNJpYlKsTpGTtBi_aLwQwGicrqnKQ" />
-    <link rel="icon" type="image/svg+xml" href="/logo.ico" />
+    <meta
+      name="google-site-verification"
+      content="mneL-s02YaCixOQNJpYlKsTpGTtBi_aLwQwGicrqnKQ"
+    />
+    <link rel="icon" href="/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/logo.ico" type="image/x-icon" />
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
@@ -21,8 +26,56 @@
       content="Full‑stack AI engineer & tech hobbyist crafting AI‑powered tools and seamless user experiences. Explore projects and connect to discuss innovative tech."
     />
     <title>Abhijith's portfolio</title>
+    <!-- Person schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Abhijith Saji",
+        "alternateName": [
+          "Abhijith’s Portfolio",
+          "Abhijiths Portfolio",
+          "Abhijith Portfolio",
+          "Abhi’s Portfolio",
+          "Abhi Portfolio",
+          "Abhis Portfolio"
+        ],
+        "jobTitle": "Full-stack AI Engineer & Tech Hobbyist",
+        "url": "https://abhijith.co.uk/",
+        "sameAs": [
+          "https://github.com/Abhijith834",
+          "https://www.linkedin.com/in/abhijith-saji-1b9735239/"
+        ]
+      }
+      </script>
+      
+  
+      <!-- WebSite schema -->
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "https://abhijith.co.uk/",
+        "name": "Abhijith’s Portfolio"
+      }
+      </script>
+  
+      <!-- Organization schema -->
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://abhijith.co.uk/",
+        "name": "Abhijith’s Portfolio",
+        "logo": "https://abhijith.co.uk/logo.ico"
+      }
+      </script>
   </head>
   <body>
+    <noscript>
+      <h1>Abhijith’s Portfolio</h1>
+      <span class="visually-hidden">Abhijiths Portfolio</span>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -7,6 +7,9 @@ import AIPocketTutorImg from "../assets/projects/AI_Pocket_Tutor.png";
 import Dion from "../assets/projects/Dion.png";
 import ASCII from "../assets/projects/ASCII.png";
 import ASCII_GIF from "../assets/projects/ASCII.gif";
+import Events from "../assets/projects/Events1.png";
+import ParcelDepot from "../assets/projects/ParcelDepot.png";
+import OldProtfolio from "../assets/projects/OldProtfolio.png";
 
 const projects = [
   {
@@ -17,6 +20,22 @@ const projects = [
       "An AI tutor that transforms study materials into interactive lessons, answers queries, and generates quizzes. Implements RAG system, Agentric system",
     link: "https://github.com/Abhijith834/AI-Pocket-Tutor.git",
     viewLive: "https://www.tutorbot.online/",
+  },
+  {
+    title: "Parcel Depot",
+    imageSrc: ParcelDepot,
+    video: "https://youtu.be/mHfeqaT6ZGY",
+    description: "A Java program that simulates a Parcel Depot Company. This project demostrated the view from both the customers and workers",
+    link: "https://github.com/Abhijith834/Parcel-Depot.git",
+    viewLive: "",
+  },
+  {
+    title: "Venzini Fanatic",
+    imageSrc: Events,
+    video: "https://youtu.be/PNdJRojRJ-I",
+    description: "This is a webiste prototype made in figma.",
+    link: "https://www.figma.com/design/ot3MHxRX2t6Ovs5dSPKKj7/Venzini-Fanatic-2?node-id=0-1&t=y58HOw7iqihKVum9-1",
+    viewLive: "https://www.figma.com/proto/ot3MHxRX2t6Ovs5dSPKKj7/Venzini-Fanatic-2?node-id=73-707&p=f&t=DRX0vlCdiCHbsrnV-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=73%3A707",
   },
   {
     title: "Dion",
@@ -37,28 +56,12 @@ const projects = [
     viewLive: "",
   },
   {
-    title: "Project Four",
-    imageSrc: "https://via.placeholder.com/600x400",
-    video: "",
-    description: "A brief overview of what Project Four is about.",
-    link: "https://example.com/project-four",
-    viewLive: "",
-  },
-  {
-    title: "Project Five",
-    imageSrc: "https://via.placeholder.com/600x400",
-    video: "",
-    description: "A brief overview of what Project Five is about.",
-    link: "https://example.com/project-five",
-    viewLive: "",
-  },
-  {
-    title: "Project Six",
-    imageSrc: "https://via.placeholder.com/600x400",
-    video: "",
-    description: "A brief overview of what Project Six is about.",
-    link: "https://example.com/project-six",
-    viewLive: "",
+    title: "My first portfolio",
+    imageSrc: OldProtfolio,
+    video: "https://youtu.be/j4-JcvcIRGs",
+    description: "This is my first portfolio made with bastic HTML, CSS and JavaScript",
+    link: "https://github.com/Abhijith834/Abhijith834.github.io.git",
+    viewLive: "https://abhijith834.github.io/",
   },
 ];
 
@@ -116,14 +119,14 @@ const ProjectsSection = () => {
                 }
               >
                 {media.type === "youtube" && isPlaying ? (
-                  <iframe
-                    className="project-video"
-                    src={`https://www.youtube.com/embed/${media.id}?autoplay=1&controls=0&mute=1`}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title={proj.title}
-                  />
+                <iframe
+                  className="project-video"
+                  src={`https://www.youtube-nocookie.com/embed/${media.id}?autoplay=1&controls=0&mute=1`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title={proj.title}
+                />
                 ) : media.type === "gif" && isPlaying ? (
                   <img
                     className="project-video"
