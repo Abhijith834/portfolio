@@ -47,7 +47,7 @@
   width: 100%;
   height: auto;
   transition: filter 0.4s, opacity 0.4s;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .intro-avatar-img[src$="pic_upscale.webp"] {

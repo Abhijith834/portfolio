@@ -60,13 +60,13 @@ const BackgroundTriangles = () => {
     const material = new THREE.LineBasicMaterial({ color: lineColor });
 
     // Build shards array
-    const cols   = Math.ceil(width / triangleSize) * 2;
+    const cols   = Math.ceil(width / triangleSize) * 2 + 1;
     const rows   = Math.ceil(height / rowHeight) + 1;
     const shards = [];
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const x0 = c * (triangleSize / 2) - width / 2;
+        const x0 = c * (triangleSize / 2) - width / 2 - triangleSize / 2;
         const y0 = r * rowHeight       - height / 2;
         const up = (c + r) % 2 === 0;
 
