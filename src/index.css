@@ -14,6 +14,7 @@ body,
   font-family: 'Inter';
   font-size: 22px;
   scroll-behavior: smooth;
+  user-select: none;
 }
 
 .visually-hidden {
@@ -26,4 +27,10 @@ body,
   clip: rect(0 0 0 0); 
   overflow: hidden;
   white-space: nowrap;
+}
+@media (hover: none) and (pointer: coarse) {
+  #root {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
 }
