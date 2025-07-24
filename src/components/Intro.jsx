@@ -49,16 +49,22 @@ const Intro = () => {
           href="https://linkedin.com/in/abhijith-saji-1b9735239"
           aria-label="LinkedIn"
           className="link-btn li"
+          target="_blank"
+          rel="noopener noreferrer"
         />
         <a
           href="https://github.com/Abhijith834"
           aria-label="GitHub"
           className="link-btn gh"
+          target="_blank"
+          rel="noopener noreferrer"
         />
         <a
-          href="https://www.figma.com/"
+          href="https://www.figma.com/proto/ot3MHxRX2t6Ovs5dSPKKj7/Venzini-Fanatic-2?node-id=81-352&starting-point-node-id=73%3A707&t=3ORoP08SFWN8H6fc-1"
           aria-label="Figma"
           className="link-btn gm"
+          target="_blank"
+          rel="noopener noreferrer"
         />
       </div>
 
